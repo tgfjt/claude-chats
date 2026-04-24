@@ -5,7 +5,10 @@ import { readSessionMeta } from "./topic.js";
 import type { ProjectSummary, SessionSummary } from "../types.js";
 
 const PROJECTS_ROOT = process.env.CLAUDE_PROJECTS_ROOT ?? join(homedir(), ".claude", "projects");
-const CACHE_FILE = join(process.cwd(), "node_modules", ".cache", "claude-chats", "topics.json");
+const CACHE_DIR =
+  process.env.CLAUDE_CHATS_CACHE_DIR ??
+  join(process.cwd(), "node_modules", ".cache", "claude-chats");
+const CACHE_FILE = join(CACHE_DIR, "topics.json");
 
 type CacheEntry = { topic: string; cwd: string | null; mtime: number; size: number };
 type Cache = Record<string, CacheEntry>;
