@@ -3,12 +3,17 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "main": "dist-electron/electron/main.js",
   "scripts": {
     "dev": "vp dev",
     "build": "vp build",
     "preview": "vp preview",
     "check": "vp check",
-    "test": "vp test"
+    "test": "vp test",
+    "electron:dev": "concurrently -k -n vite,electron \"vp dev\" \"wait-on tcp:5173 && ELECTRON_DEV=1 electron .\"",
+    "electron:compile": "vp build && tsc -p electron/tsconfig.json",
+    "electron:start": "pnpm electron:compile && electron .",
+    "electron:dist": "pnpm electron:compile && electron-builder --mac"
   },
   "dependencies": {
     "@pierre/trees": "1.0.0-beta.3",
@@ -20,13 +25,36 @@
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^4.3.4",
+    "concurrently": "^9.2.1",
+    "electron": "^41.3.0",
+    "electron-builder": "^26.8.1",
     "typescript": "^5.6.3",
     "vite": "^6.0.0",
-    "vitest": "^2.1.5"
+    "vitest": "^2.1.5",
+    "wait-on": "^9.0.5"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
-      "esbuild"
+      "esbuild",
+      "electron",
+      "electron-winstaller"
     ]
+  },
+  "build": {
+    "appId": "local.claude-chats",
+    "productName": "claude-chats",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**",
+      "dist-electron/**",
+      "package.json"
+    ],
+    "mac": {
+      "target": "dmg",
+      "category": "public.app-category.developer-tools"
+    },
+    "asar": true
   }
 }
