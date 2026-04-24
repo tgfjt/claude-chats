@@ -12,7 +12,7 @@ const DAYS_OPTIONS: { label: string; value: number | null }[] = [
 const IS_ELECTRON = typeof navigator !== "undefined" && navigator.userAgent.includes("Electron");
 
 export function App() {
-  const { data, error, loading, reload } = useIndex();
+  const { data, error, loading, revision, reload } = useIndex();
   const [selection, setSelection] = useState<SessionKey | null>(null);
   const [mode, setMode] = useState<ViewMode>("project");
   const [days, setDays] = useState<number | null>(7);
@@ -57,12 +57,22 @@ export function App() {
               ))}
             </select>
           )}
+          <button
+            type="button"
+            className="refresh-button"
+            onClick={reload}
+            disabled={loading}
+            title="一覧を再読み込み"
+            aria-label="一覧を再読み込み"
+          >
+            {loading ? "⋯" : "↻"}
+          </button>
         </div>
         {loading && !data && <div className="pane-status">loading index…</div>}
         {error && <div className="pane-status error">error: {error}</div>}
         {data && (
           <TreePane
-            key={`${mode}-${days ?? "all"}`}
+            key={`${mode}-${days ?? "all"}-${revision}`}
             index={data}
             mode={mode}
             days={days}

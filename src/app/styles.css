@@ -84,6 +84,35 @@ body,
   color: inherit;
 }
 
+.refresh-button {
+  margin-left: auto;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font: inherit;
+  line-height: 1;
+  color: inherit;
+  background: transparent;
+  border: 1px solid color-mix(in oklab, currentColor 20%, transparent);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.refresh-button:hover:not(:disabled),
+.refresh-button:focus-visible {
+  background: color-mix(in oklab, currentColor 10%, transparent);
+  outline: none;
+}
+
+.refresh-button:disabled {
+  opacity: 0.5;
+  cursor: progress;
+}
+
 .layout-right {
   overflow: auto;
   padding: 16px 24px;

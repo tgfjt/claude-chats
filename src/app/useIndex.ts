@@ -5,6 +5,7 @@ export function useIndex(): {
   data: IndexResponse | null;
   error: string | null;
   loading: boolean;
+  revision: number;
   reload: () => void;
 } {
   const [data, setData] = useState<IndexResponse | null>(null);
@@ -34,5 +35,5 @@ export function useIndex(): {
     };
   }, [nonce]);
 
-  return { data, error, loading, reload };
+  return { data, error, loading, revision: nonce, reload };
 }
