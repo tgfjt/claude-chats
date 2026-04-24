@@ -9,6 +9,8 @@ const DAYS_OPTIONS: { label: string; value: number | null }[] = [
   { label: "全期間", value: null },
 ];
 
+const IS_ELECTRON = typeof navigator !== "undefined" && navigator.userAgent.includes("Electron");
+
 export function App() {
   const { data, error, loading, reload } = useIndex();
   const [selection, setSelection] = useState<SessionKey | null>(null);
@@ -21,7 +23,7 @@ export function App() {
   }, [reload]);
 
   return (
-    <div className="layout">
+    <div className={IS_ELECTRON ? "layout layout-electron" : "layout"}>
       <aside className="layout-left">
         <div className="view-controls">
           <div className="segmented" role="tablist">

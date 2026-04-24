@@ -37,6 +37,17 @@ body,
   align-items: center;
 }
 
+.layout-electron .view-controls {
+  padding-left: 82px;
+  padding-top: 12px;
+  padding-bottom: 10px;
+  -webkit-app-region: drag;
+}
+
+.layout-electron .view-controls > * {
+  -webkit-app-region: no-drag;
+}
+
 .segmented {
   display: inline-flex;
   border: 1px solid color-mix(in oklab, currentColor 20%, transparent);
